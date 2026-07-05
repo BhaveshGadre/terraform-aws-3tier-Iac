@@ -77,3 +77,13 @@ resource "aws_subnet" "db_b" {
   }
 }
 
+#INTERNET GATEWAY#
+
+resource "aws_internet_gateway" "igw" {
+    vpc_id = aws_vpc.main.id
+
+    tags = {
+        Name = "project-igw"
+    }
+}
+
