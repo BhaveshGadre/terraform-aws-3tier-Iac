@@ -54,3 +54,26 @@ resource "aws_subnet" "pvt_b" {
     Name = "pvt-subnet-b"
   }
 }
+
+#DB SUBNETS#
+
+resource "aws_subnet" "db_a" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.5.0/24"
+  availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "db-subnet-a"
+  }
+}
+
+resource "aws_subnet" "db_b" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.6.0/24"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "db-subnet-b"
+  }
+}
+
