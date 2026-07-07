@@ -340,30 +340,37 @@ resource "aws_nat_gateway" "nat_gw" {
   }
 }
 
-#ROUTE TABLE FOR PRIVATE SUBNETS#
+#DB SUBNET GROUP#
 
-resource "aws_route_table" "private_rt" {
-  vpc_id = aws_vpc.main.id
+resource "aws_db_subnet_group" "db_subnet_group" {
+  name       = "project-db-subnet-group"
+  subnet_ids = [aws_subnet.db_a.id, aws_subnet.db_b.id]
 
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_gw.id
-  }
   tags = {
-    Name = "private-route-table"
-  } 
+    Name = "project-db-subnet-group"
+  }
 }
 
-#ROUTE TABLE ASSOCIATION FOR PRIVATE SUBNETS#
+#Amazon RDS MySQL Instance#
 
-resource "aws_route_table_association" "private_a_assoc" {
-  subnet_id      = aws_subnet.pvt_a.id
-  route_table_id = aws_route_table.private_rt.id
-}  
+resource "aws_db_instance" "mysql_db" {
+  identifier = "project-mysql-db"
+  allocated_storage    = 20
+  storage_type         = "gp2" 
+  engine               = "mysql"
+  engine_version       = "8.0"
+  instance_class       = "db.t3.micro"
+  db_name = var.db_name
+  username = var.db_username 
+  password = var.db_password
+  db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
+  publicly_accessible = false
+  skip_final_snapshot = true
+  multi_az = false
+  
+  tags = {
+    Name = "project-mysql-db"
+  }
 
-resource "aws_route_table_association" "private_b_assoc" {
-  subnet_id      = aws_subnet.pvt_b.id
-  route_table_id = aws_route_table.private_rt.id
 }
-
-
