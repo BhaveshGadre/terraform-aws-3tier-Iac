@@ -1,5 +1,5 @@
 resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
+  cidr_block           = var.vpc_cidr
   enable_dns_support   = true
   enable_dns_hostnames = true
 
@@ -13,8 +13,8 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_a" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a"
+  cidr_block              = var.public_subnet_a_cidr
+  availability_zone       = var.az_a
   map_public_ip_on_launch = true
 
   tags = {
@@ -24,8 +24,8 @@ resource "aws_subnet" "public_a" {
 
 resource "aws_subnet" "public_b" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-east-1b"
+  cidr_block              = var.public_subnet_b_cidr
+  availability_zone       = var.az_b
   map_public_ip_on_launch = true
 
   tags = {
@@ -37,8 +37,8 @@ resource "aws_subnet" "public_b" {
 
 resource "aws_subnet" "pvt_a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.3.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.private_subnet_a_cidr
+  availability_zone = var.az_a
 
   tags = {
     Name = "pvt-subnet-a"
@@ -47,8 +47,8 @@ resource "aws_subnet" "pvt_a" {
 
 resource "aws_subnet" "pvt_b" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.4.0/24"
-  availability_zone = "us-east-1b"
+  cidr_block        = var.private_subnet_b_cidr
+  availability_zone = var.az_b
 
   tags = {
     Name = "pvt-subnet-b"
@@ -59,8 +59,8 @@ resource "aws_subnet" "pvt_b" {
 
 resource "aws_subnet" "db_a" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.5.0/24"
-  availability_zone = "us-east-1a"
+  cidr_block        = var.db_subnet_a_cidr
+  availability_zone = var.az_a
 
   tags = {
     Name = "db-subnet-a"
@@ -69,8 +69,8 @@ resource "aws_subnet" "db_a" {
 
 resource "aws_subnet" "db_b" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.6.0/24"
-  availability_zone = "us-east-1b"
+  cidr_block        = var.db_subnet_b_cidr
+  availability_zone = var.az_b
 
   tags = {
     Name = "db-subnet-b"

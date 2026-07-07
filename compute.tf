@@ -2,10 +2,10 @@
 
 resource "aws_launch_template" "webapp_lt" {
   name_prefix   = "webapp-launch-template"
-  image_id      = "ami-0b6d9d3d33ba97d99"
-  instance_type = "t3.small"
+  image_id      = var.ami_id
+  instance_type = var.instance_type
 
-  key_name = "project-key"
+  key_name = var.key_name
 
   network_interfaces {
     security_groups = [aws_security_group.webapp_sg.id]
@@ -36,9 +36,9 @@ resource "aws_launch_template" "webapp_lt" {
 
 resource "aws_autoscaling_group" "webapp_asg" {
   name                = "webapp-asg"
-  max_size            = 4
-  min_size            = 2
-  desired_capacity    = 2
+  max_size            = var.asg_max_size
+  desired_capacity    = var.asg_desired_capacity
+  min_size            = var.asg_min_size
   vpc_zone_identifier = [aws_subnet.pvt_a.id, aws_subnet.pvt_b.id]
   launch_template {
     id      = aws_launch_template.webapp_lt.id
