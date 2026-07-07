@@ -208,5 +208,39 @@ resource "aws_security_group" "db_sg" {
   }
 }
 
+#LAUNCH TEMPLATE#
+
+resource "aws_launch_template" "webapp_lt" {
+  name_prefix   = "webapp-launch-template"
+  image_id      = "ami-0b6d9d3d33ba97d99"
+  instance_type = "t3.small"
+
+  key_name = "project-key"
+
+  network_interfaces {
+    security_groups             = [aws_security_group.webapp_sg.id]
+  }
+
+  user_data = base64encode(<<-EOF
+  #!/bin/bash
+  apt update -y
+  apt install apache2 -y
+  systemctl enable apache2
+  systemctl start apache2
+
+  echo "<h1>Terraform 3-Tier Infrastructure</h1>" > /var/www/html/index.html
+  echo "<h2>Hostname: $(hostname)</h2>" >> /var/www/html/index.html
+  EOF
+  )
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "webapp-instance"
+    }
+  }
+}
+
 
 
