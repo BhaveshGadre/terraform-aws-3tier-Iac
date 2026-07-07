@@ -242,5 +242,29 @@ resource "aws_launch_template" "webapp_lt" {
   }
 }
 
+#TARGET GROUP#
+
+resource "aws_lb_target_group" "webapp_tg" {
+  name     = "webapp-target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    matcher           = "200"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    
+  }
+
+  tags = {
+    Name = "webapp-target-group"
+  }
+}
+
 
 
