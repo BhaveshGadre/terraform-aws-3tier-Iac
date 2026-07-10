@@ -106,18 +106,6 @@ variable "db_allocated_storage" {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 variable "db_name" {
   type = string
 }
