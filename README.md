@@ -80,15 +80,35 @@ Amazon RDS MySQL
 - Remote Terraform State Management
 - Parameterized and Modular Configuration
 
-## Project Screenshots
+# Project Screenshots
 
-Add screenshots of:
-- Terraform Apply Success
-- AWS VPC Dashboard
-- ALB and Target Group
-- EC2 Auto Scaling Group
-- RDS Instance
-- S3 Backend and DynamoDB Lock Table
+## VPC Overview
+
+![VPC Overview](screenshots/VPC%20Overview.png)
+
+## Application Load Balancer
+
+![ALB](screenshots/ALB.png)
+
+## Target Group
+
+![Target Group](screenshots/Target%20Group.png)
+
+## Auto Scaling Group
+
+![ASG](screenshots/ASG.png)
+
+## Amazon RDS Instance
+
+![RDS Instance](screenshots/RDS%20Instance.png)
+
+## Terraform State S3 Bucket
+
+![S3 Bucket](screenshots/S3%20Bucket-tfstate.png)
+
+## DynamoDB State Lock Table
+
+![DB Lock Table](screenshots/DB%20Lock%20Table.png)
 
 ## Prerequisites
 
