@@ -8,7 +8,7 @@ Terraform remote state is securely stored in Amazon S3 with state locking enable
 
 ## Architecture Diagram
 
-![Architecture](docs/architecture-diagram.png)
+![Architecture](docs/terraform-iac-3tier-architecture.png)
 
 ## Architecture
 
